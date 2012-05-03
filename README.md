@@ -49,7 +49,7 @@ example
   .resolve(fileName, function(err) {
     console.log(err);
   });
-
+```
 
 resolve
 ====
@@ -60,6 +60,7 @@ use "resolve" to run single task
   .resolve(fileName, function(err) {
     console.log(err);
   })
+```
 
 forEach
 ====
@@ -73,6 +74,7 @@ use "forEach" to run multiple tasks
   .forEach([1,2,3], function(err) {
     console.log(arguments);
   })
+```
 
 all
 ====
@@ -84,3 +86,4 @@ use "all" to sync results
     console.log('read:' + src);
     fs.readFile(path.resolve(filePath, src), 'utf-8', cb);
   }).all(srcs, callback);
+```
