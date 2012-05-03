@@ -1,10 +1,12 @@
-next
-====
+usage:
+---
+
+### next
 
 use &quot;next&quot; call to flatten the callback depth 
 
-example
 ```javascript
+  var _next = require('next');
   _next(function(fileName, callback) {
     fs.readFile(fileName, 'utf-8', callback);
   })
@@ -51,8 +53,7 @@ example
   });
 ```
 
-resolve
-====
+### resolve
 
 use "resolve" to run single task
 
@@ -62,22 +63,20 @@ use "resolve" to run single task
   })
 ```
 
-forEach
-====
+### forEach
 
 use "forEach" to run multiple tasks
 
 ```javascript
   _next(function(a, callback) {
-    callback(null, a + 1)
+    callback(null, a + 1);
   })
   .forEach([1,2,3], function(err) {
     console.log(arguments);
-  })
+  });
 ```
 
-all
-====
+### all
 
 use "all" to sync results
 
