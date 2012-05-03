@@ -7,7 +7,7 @@ output:
 /home/path/to/index-min.js
 
 process: input a html file
-1  the script will find the "<script>" tags
+1  find the "<script>" tags
 2  read the script src when availible.
 3  combine them and use "uglify-js" to compress them into one file
 4  write it into srcPath/outputFileName
