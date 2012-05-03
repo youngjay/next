@@ -1,3 +1,14 @@
+next
+====
+
+a tiny library for async programing
+
+advantage:
+---
+* less methods
+* node style callback, args use "err" in first position
+
+
 usage:
 ---
 
