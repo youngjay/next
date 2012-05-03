@@ -3,7 +3,7 @@ next
 
 a tiny library for async programing
 
-advantage:
+advantages:
 ---
 * less methods
 * node style callback, args use "err" in first position
@@ -30,7 +30,7 @@ next(function(a, callback) {
 output: [null, 4]
 
 
-### resolve
+### `resolve`
 
 use "resolve" to run single task
 
@@ -43,7 +43,7 @@ next(function(a, callback) {
 });
 ```
 
-### forEach
+### `forEach`
 
 use "forEach" to run multiple tasks
 
@@ -55,14 +55,21 @@ next(function(a, callback) {
   console.log(arguments);
 });
 ```
+output: [null, 2]
+output: [null, 3]
+output: [null, 4]
 
-### all
+
+### `all`
 
 use "all" to sync results
 
 ```javascript
-next(function(src, cb) {
-  console.log('read:' + src);
-  fs.readFile(path.resolve(filePath, src), 'utf-8', cb);
-}).all(srcs, callback);
+next(function(a, callback) {
+  callback(null, a + 1);
+})
+.all([1,2,3], function(err) {
+  console.log(arguments);
+});
 ```
+output: [null, [2,3,4]]
