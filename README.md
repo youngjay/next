@@ -18,7 +18,13 @@ use &quot;next&quot; call to flatten the callback depth
 
 ```javascript
 next(function(a, callback) {
-  callback(null, a + 1);
+  callback(null, a + 2);
+})
+.next(function(a, callback) {
+  callback(null, a + 2);
+})
+.next(function(a, callback) {
+  callback(null, a + 2);
 })
 .next(function(a, callback) {
   callback(null, a + 2);
@@ -27,7 +33,7 @@ next(function(a, callback) {
   console.log(arguments);
 });
 ```
-output: [null, 4]
+output: [null, 9]
 
 
 ### `resolve`
@@ -49,15 +55,21 @@ use "forEach" to run multiple tasks
 
 ```javascript
 next(function(a, callback) {
-  callback(null, a + 1);
+  setTimeout(function() {
+    callback(null, a + 1);
+  }, a * 10);  
 })
-.forEach([1,2,3], function(err) {
+.forEach([3,2,1], function(err) {
   console.log(arguments);
 });
 ```
-output: [null, 2]
-output: [null, 3]
-output: [null, 4]
+output: 
+
+[null, 2]
+
+[null, 3]
+
+[null, 4]
 
 
 ### `all`
