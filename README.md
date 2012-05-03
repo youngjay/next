@@ -62,14 +62,16 @@ output: [null, 4]
 
 ### `all`
 
-use "all" to sync results
+use "all" to sync results, next will take care of the input items order
 
 ```javascript
 next(function(a, callback) {
-  callback(null, a + 1);
+  setTimeout(function() {
+    callback(null, a + 1);
+  }, a * 10);  
 })
-.all([1,2,3], function(err) {
+.all([3,2,1], function(err) {
   console.log(arguments);
 });
 ```
-output: [null, [2,3,4]]
+output: [null, [4,3,2]]
