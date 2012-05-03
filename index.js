@@ -1,5 +1,5 @@
 define(function(require, exports, module) {
 
-module = require('./lib/next.js');
+module.exports = require('./lib/next.js');
 
 });

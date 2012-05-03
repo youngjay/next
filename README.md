@@ -58,9 +58,12 @@ use &quot;next&quot; call to flatten the callback depth
 use "resolve" to run single task
 
 ```javascript
-  .resolve(fileName, function(err) {
-    console.log(err);
+  _next(function(a, callback) {
+    callback(null, a + 1);
   })
+  .resolve(1, function(err) {
+    console.log(arguments);
+  });
 ```
 
 ### forEach
