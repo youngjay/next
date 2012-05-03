@@ -15,8 +15,7 @@ process: input a html file
 */
 var fs = require('fs');
 var path = require('path');
-require('seajs');
-var _next = require('next');
+var _next = require('../../lib/next.js');
 var uglify = require('uglify-js');
 
 var fileName = process.argv[2];
