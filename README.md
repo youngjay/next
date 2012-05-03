@@ -8,6 +8,29 @@ advantages:
 * less methods
 * node style callback, args use "err" in first position
 
+dependencies:
+---
+next.js uses [seajs](https://github.com/seajs/seajs). If you dont't like it, just comment the first line and the last line
+```javascript
+define(function(require, exports, module) {
+  // comment lines above and below 
+});
+```
+
+You can also use it in web with a small change.
+```javascript
+// replace
+module.exports = function(fn) {
+  return new Async([fn]);
+};
+
+// with
+window.next = function(fn) {
+  return new Async([fn]);
+};
+
+```
+
 
 usage:
 ---
