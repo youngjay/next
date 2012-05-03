@@ -1,6 +1,6 @@
 /*
 
-useage:
+usage:
 node compress.js /home/path/to/src.html
 
 output:
