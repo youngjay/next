@@ -110,3 +110,7 @@ next(function(a, callback) {
 });
 ```
 output: [null, [4,3,2]]
+
+examples:
+---
+[compress js](https://github.com/youngjay/next/blob/master/examples/compress/compress.js)
