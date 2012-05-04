@@ -28,7 +28,7 @@ output: [null, 2]
 
 ### `next`
 
-use next(fn_or_another_next) call to flatten the callback depth 
+use next(fn_or_another_next) to invoke muliple handler sequentially
 
 ```javascript
 next(function(a, callback) {
