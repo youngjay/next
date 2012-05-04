@@ -53,7 +53,7 @@ var run = function() {
     _next(function(src, cb) {
       console.log('read:' + src);
       fs.readFile(path.resolve(filePath, src), 'utf-8', cb);
-    }).all(srcs, callback);
+    }).resolveAll(srcs, callback);
   })
   // uglify
   .next(function(contents, callback) {

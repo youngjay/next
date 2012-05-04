@@ -48,9 +48,9 @@ next(function(a, callback) {
 });
 ```
 
-### `forEach`
+### `resolveEach`
 
-use "forEach" to run multiple tasks
+use "resolveEach" to run multiple tasks
 
 ```javascript
 next(function(a, callback) {
@@ -58,7 +58,7 @@ next(function(a, callback) {
     callback(null, a + 1);
   }, a * 10);  
 })
-.forEach([3,2,1], function(err) {
+.resolveEach([3,2,1], function(err) {
   console.log(arguments);
 });
 ```
@@ -71,9 +71,9 @@ output:
 [null, 4]
 
 
-### `all`
+### `resolveAll`
 
-use "all" to sync results, next will take care of the input items order
+use "resolveAll" to sync results, next will take care of the input items order
 
 ```javascript
 next(function(a, callback) {
@@ -81,7 +81,7 @@ next(function(a, callback) {
     callback(null, a + 1);
   }, a * 10);  
 })
-.all([3,2,1], function(err) {
+.resolveAll([3,2,1], function(err) {
   console.log(arguments);
 });
 ```
