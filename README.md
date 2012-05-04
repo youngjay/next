@@ -13,7 +13,7 @@ api:
 
 ### `resolve`
 
-use resolve(arg1, arg2...argN, errHandler) to start task with args
+use resolve(arg1, arg2...argN, callback) to start task with args
 
 ```javascript
 next(function(a, callback) {
@@ -23,6 +23,7 @@ next(function(a, callback) {
   console.log(arguments);
 });
 ```
+output: [null, 2]
 
 
 ### `next`
