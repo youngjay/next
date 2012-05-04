@@ -8,8 +8,22 @@ advantages:
 * less methods
 * node style callback, args use "err" in first position, can embed with node native methods easily
 
-usage:
+api:
 ---
+
+### `resolve`
+
+use resolve(arg1, arg2...argN, errHandler) to start task with args
+
+```javascript
+next(function(a, callback) {
+  callback(null, a + 1);
+})
+.resolve(1, function(err) {
+  console.log(arguments);
+});
+```
+
 
 ### `next`
 
@@ -34,21 +48,6 @@ next(function(a, callback) {
 ```
 output: [null, 9]
 
-
-### `resolve`
-
-use "resolve" to run single task
-
-```javascript
-next(function(a, callback) {
-  callback(null, a + 1);
-})
-.resolve(1, function(err) {
-  console.log(arguments);
-});
-```
-
-
 ### `reduce`
 
 use reduce(fn_or_another_next) to map reduce items
@@ -58,7 +57,7 @@ next()
 .reduce(function(a, callback) {
   callback(null, a + 1);
 })
-.resolveAll([3,2,1], function(err) {
+.resolve([3,2,1], function(err) {
   console.log(arguments);
 });
 ```
