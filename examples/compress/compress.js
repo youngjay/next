@@ -49,11 +49,9 @@ var run = function() {
     callback(null, srcs);
   })
   // read js source files
-  .next(function(srcs, callback) {
-    _next(function(src, cb) {
+  .reduce(function(src, callback) {
       console.log('read:' + src);
-      fs.readFile(path.resolve(filePath, src), 'utf-8', cb);
-    }).resolveAll(srcs, callback);
+      fs.readFile(path.resolve(filePath, src), 'utf-8', callback);
   })
   // uglify
   .next(function(contents, callback) {

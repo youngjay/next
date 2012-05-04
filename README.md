@@ -13,7 +13,7 @@ usage:
 
 ### `next`
 
-use &quot;next&quot; call to flatten the callback depth 
+use next(fn_or_another_next) call to flatten the callback depth 
 
 ```javascript
 next(function(a, callback) {
@@ -48,38 +48,15 @@ next(function(a, callback) {
 });
 ```
 
-### `resolveEach`
 
-use "resolveEach" to run multiple tasks
+### `reduce`
 
-```javascript
-next(function(a, callback) {
-  setTimeout(function() {
-    callback(null, a + 1);
-  }, a * 10);  
-})
-.resolveEach([3,2,1], function(err) {
-  console.log(arguments);
-});
-```
-output: 
-
-[null, 2]
-
-[null, 3]
-
-[null, 4]
-
-
-### `resolveAll`
-
-use "resolveAll" to sync results, next will take care of the input items order
+use reduce(fn_or_another_next) to map reduce items
 
 ```javascript
-next(function(a, callback) {
-  setTimeout(function() {
-    callback(null, a + 1);
-  }, a * 10);  
+next()
+.reduce(function(a, callback) {
+  callback(null, a + 1);
 })
 .resolveAll([3,2,1], function(err) {
   console.log(arguments);
