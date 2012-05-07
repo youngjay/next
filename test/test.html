@@ -1,4 +1,21 @@
 <script src="../lib/next.js"></script>
 <script>
+var map = next.map
+
+
+
+var add = function(a, callback) {
+  callback(null, a + 1);
+  callback(null, a + 1);
+};
+
+var mul = function(a, callback) {
+  callback(null, a * 2);
+};
+
+map(add)([3, 4], function() {
+  console.log(arguments)
+});
+
 
 </script>
