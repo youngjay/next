@@ -59,7 +59,7 @@ var throttledRunner = next.concurrency(function(a, callback) {
     console.log('end:' + a);
     callback(a);
   }, Math.random() * 3000);
-}, LIMIT, function() {
+}, 5, function() {
   console.log('drain');
 });
 
