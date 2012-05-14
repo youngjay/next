@@ -70,9 +70,25 @@ for (var i = 0; i < 1000; i++) {
 ```
 
 ### echo()
-生成一个函数，直接返回参数。
+辅助函数，直接返回参数
 ```javascript
 next.echo([1,2,3], function() {
+  console.log(arguments);
+});
+// result: [null, [1,2,3]]
+
+```
+
+在collect的时候，使用echo可以返回原参数
+
+```javascript
+var collectAction = next.collect(
+  next.echo,
+  function(num, callback) { callback(null, num + 1) },
+  function(num, callback) { callback(null, num + 2) }
+);
+
+collectAction(1, function() {
   console.log(arguments);
 });
 // result: [null, [1,2,3]]
