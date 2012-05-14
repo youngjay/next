@@ -1,5 +1,6 @@
-define(function(require, _, module) {
+define(function(require, exports, module) {
 
-module.exports = require('./lib/callback-util');
+
+module.exports = require('./lib/callback-util.js');
 
 });

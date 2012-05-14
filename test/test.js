@@ -4,7 +4,7 @@ var util = require('../index.js');
 
 var collect = util.collect;
 var pipe = util.pipe;
-var map = util.map;
+var each = util.each;
 var concurrency = util.concurrency;
 var memoize = util.memoize;
 var rescue = util.rescue;
@@ -25,11 +25,11 @@ var mul = function(a, callback) {
 
 pipe(
   function(callback) {
-    console.log('test collect');
+    // console.log('test collect');
 
-    collect([pipe(), add, mul])(10, function() {
-      console.log(arguments)
-    })
+    // collect([pipe(), add, mul])(10, function() {
+    //   console.log(arguments)
+    // })
 
     // add.append(mul)(3, function() {
     //   console.log(arguments)
@@ -45,9 +45,9 @@ pipe(
   },
 
   function(callback) {
-    console.log('test map');
+    console.log('test each');
 
-    map(add)([3, 4], function() {
+    each(add)([3, 4], function() {
       console.log(arguments)
     });
 
