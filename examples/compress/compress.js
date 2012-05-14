@@ -13,7 +13,6 @@ process: input a html file
 4  write it into srcPath/outputFileName
 
 */
-require('../../seajs/sea-node.js');
 
 var fs = require('fs');
 var path = require('path');
@@ -27,51 +26,57 @@ var outputFileName = 'index-min.js';
 var rscript = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
 
 
-var run = function() {
-  if (!fileName) {
-    console.log('调用的时候请输入文件名，例如:node compress.js js.html')
-    return;
-  }
-
-  next.pipe(
-    function(fileName, callback) {
-      fs.readFile(fileName, 'utf-8', callback);
-    },
-    function(content, callback) {
-      var srcs = [];
-      content.match(rscript).forEach(function(str) {
-        var i = str.indexOf('src="');
-        if (i !== -1) {       
-          str = str.substring(i + 5);
-          str = str.substring(0, str.indexOf('"'));
-          if (str !== outputFileName) {
-            srcs.push(str);
-          }
-        }
-      });
-      callback(null, srcs);
-    },
-    next.each(function(src, callback) {
-        console.log('read:' + src);
-        fs.readFile(path.resolve(filePath, src), 'utf-8', callback);
-    }),
-    function(contents, callback) {
-      console.log('compress...')
-      callback(null, uglify(contents.join('')));
-    },
-    function(distCode, callback) {
-      var distFileName = path.join(filePath, outputFileName);
-      fs.writeFile(distFileName, distCode, 'utf-8', function(err) {
-        if (err) {
-          callback(err);
-        } else {
-          console.log('write file:' + distFileName + ' successfully');
-        }
-      });
+var run = next.pipe(
+  function(fileName, callback) {
+    if (!fileName) {
+      callback('调用的时候请输入文件名，例如:node compress.js js.html');
+    } else {
+      callback(null, fileName);
     }
-  )(fileName, function() {});
+  },
 
-};
+  next.collect(next.echo, 'utf-8'),
 
-run();
+  fs.readFile,
+
+  function(content, callback) {
+    var srcs = [];
+    content.match(rscript).forEach(function(str) {
+      var i = str.indexOf('src="');
+      if (i !== -1) {       
+        str = str.substring(i + 5);
+        str = str.substring(0, str.indexOf('"'));
+        if (str !== outputFileName) {
+          srcs.push(str);
+        }
+      }
+    });
+    callback(null, srcs);
+  },
+
+  next.each(function(src, callback) {
+    var srcFileName = path.resolve(filePath, src);
+    console.log('read file from: ' + srcFileName);
+    fs.readFile(srcFileName, 'utf-8', callback);
+  }),
+
+  function(contents, callback) {
+    console.log('compressing content...')
+    callback(null, uglify(contents.join('')));
+  },
+  
+  function(distCode, callback) {
+    var distFileName = path.resolve(path.join(filePath, outputFileName));
+    console.log('write file to: ' + distFileName);
+    fs.writeFile(distFileName, distCode, 'utf-8', callback);
+  }
+)
+
+run(fileName, function(err) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('compress file complete');
+  }
+});
 
