@@ -106,6 +106,12 @@ next.rescue(function(a, callback) {
 })('error', function() {
   console.log(arguments)
 })
+
+// result:
+//rescue
+//raise exception:error
+//rescue exception
+
 ```
 
 
