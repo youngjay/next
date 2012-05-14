@@ -36,7 +36,7 @@ addEach([1,2,3], function() {
 ```
 
 ### collect(fn1, [fn2], [fnN])
-以当前参数调用每个fn，收集结果之后返回
+生成一个函数，以当前参数调用每个fn，收集结果之后返回
 ```javascript
 var collectAction = next.collect(
   function(num, callback) { callback(null, num + 1) },
@@ -66,6 +66,16 @@ var throttledRunner = next.concurrency(function(a, callback) {
 for (var i = 0; i < 1000; i++) {
   throttledRunner(i, function() {});
 }
+
+```
+
+### echo()
+生成一个函数，直接返回参数。
+```javascript
+next.echo([1,2,3], function() {
+  console.log(arguments);
+});
+// result: [null, [1,2,3]]
 
 ```
 

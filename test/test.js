@@ -8,7 +8,7 @@ var each = next.each;
 var concurrency = next.concurrency;
 var memoize = next.memoize;
 var rescue = next.rescue;
-// var task = next.task;
+var echo = next.echo;
 
 // test tool
 var add = function(a, callback) {
@@ -19,14 +19,13 @@ var mul = function(a, callback) {
   callback(null, a * 2);
 };
 
-
 // pipe(fns...)
 // pipe()(arg1, argN, callback) = invoke callback self with arguemnts
 pipe(
   function(callback) {
     console.log('test collect');
 
-    collect(pipe(), add, mul)(10, function() {
+    collect(echo, add, mul)(10, function() {
       console.log(arguments)
     })
 
