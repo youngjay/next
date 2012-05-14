@@ -1,7 +1,7 @@
 # next
 
 next 是一个为callback风格的异步编程提供支持的工具库。
-next和[Async.js](https://github.com/caolan/async)的不同之处在于：next是生成函数，async是调用函数
+next和[Async.js](https://github.com/caolan/async)的不同之处在于：async是调用函数, next是生成函数
 
 
 
