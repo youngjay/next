@@ -17,7 +17,7 @@ require('../../seajs/sea-node.js');
 
 var fs = require('fs');
 var path = require('path');
-var cw = require('../../index.js');
+var next = require('../../index.js');
 
 var uglify = require('uglify-js');
 
@@ -33,7 +33,7 @@ var run = function() {
     return;
   }
 
-  cw.pipe(
+  next.pipe(
     function(fileName, callback) {
       fs.readFile(fileName, 'utf-8', callback);
     },
@@ -51,7 +51,7 @@ var run = function() {
       });
       callback(null, srcs);
     },
-    cw.each(function(src, callback) {
+    next.each(function(src, callback) {
         console.log('read:' + src);
         fs.readFile(path.resolve(filePath, src), 'utf-8', callback);
     }),

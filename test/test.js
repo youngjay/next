@@ -25,23 +25,13 @@ var mul = function(a, callback) {
 
 pipe(
   function(callback) {
-    // console.log('test collect');
+    console.log('test collect');
 
-    // collect([pipe(), add, mul])(10, function() {
-    //   console.log(arguments)
-    // })
+    collect([pipe(), add, mul])(10, function() {
+      console.log(arguments)
+    })
 
-    // add.append(mul)(3, function() {
-    //   console.log(arguments)
-    // });
-
-    // append(function(a, callback) {
-    //   callback(null, a + 1, a + 2)
-    // })(3, function() {
-    //   console.log(arguments)
-    // });
-
-    // callback();
+    callback();
   },
 
   function(callback) {
@@ -97,7 +87,7 @@ pipe(
       console.log('call with arg:' + a + ', ' + b);
     });
 
-    // callback();
+    callback();
   },
 
   function(callback) {

@@ -1,6 +1,6 @@
 define(function(require, exports, module) {
 
 
-module.exports = require('./lib/callback-util.js');
+module.exports = require('./lib/next.js');
 
 });
