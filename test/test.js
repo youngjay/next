@@ -1,14 +1,15 @@
 define(function(require) {
 
-var wrap = require('../index.js');
-var util = wrap.util;
+var util = require('../index.js');
 
-var concat = util.concat;
+var collect = util.collect;
+var pipe = util.pipe;
 var map = util.map;
 var concurrency = util.concurrency;
 var memoize = util.memoize;
 var rescue = util.rescue;
 // var task = util.task;
+
 
 // test tool
 var add = function(a, callback) {
@@ -19,7 +20,30 @@ var mul = function(a, callback) {
   callback(null, a * 2);
 };
 
-concat(
+// pipe(fns...)
+// pipe()(arg1, argN, callback) = invoke callback self with arguemnts
+
+pipe(
+  function(callback) {
+    console.log('test collect');
+
+    collect([pipe(), add, mul])(10, function() {
+      console.log(arguments)
+    })
+
+    // add.append(mul)(3, function() {
+    //   console.log(arguments)
+    // });
+
+    // append(function(a, callback) {
+    //   callback(null, a + 1, a + 2)
+    // })(3, function() {
+    //   console.log(arguments)
+    // });
+
+    // callback();
+  },
+
   function(callback) {
     console.log('test map');
 
@@ -27,6 +51,7 @@ concat(
       console.log(arguments)
     });
 
+    console.log(arguments)
     callback();
   },
 
@@ -45,29 +70,6 @@ concat(
 
     callback()
   },
-
-
-  // function(callback) {
-  //   console.log('test task');
-    
-  //   var tadd = task(add);
-  //   var tmul = task(function(a, b, callback) {
-  //     callback(null, a * b)
-  //   });
-
-  //   aReadFile = task(fs.readFile);
-
-  //   var tFile = aReadFile('./a.txt', 'utf-8');
-    
-
-
-  //   tmul(tadd(1), 3).callback(function() {
-  //     console.log(arguments)
-  //   })
-
-
-  //   callback()
-  // },
 
 
   function(callback) {
@@ -95,7 +97,7 @@ concat(
       console.log('call with arg:' + a + ', ' + b);
     });
 
-    callback();
+    // callback();
   },
 
   function(callback) {
