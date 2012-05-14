@@ -35,10 +35,25 @@ addEach([1,2,3], function() {
 
 ```
 
+### collect(fn1, [fn2], [fnN])
+以当前参数调用每个fn，收集结果之后返回
+```javascript
+var collectAction = next.collect(
+  function(num, callback) { callback(null, num + 1) },
+  function(num, callback) { callback(null, num + 2) }
+);
+
+collectAction(1, function() {
+  console.log(arguments);
+});
+// result: [null, [2,3]]
+
+```
+
 ### concurrency(fn, limit, [onDrain])
 生成一个函数，使得同时运行的fn不超过limit个，超过的调用将被缓存，当有fn执行完毕之后再执行。当所有的fn调用完毕时触发onDrain
 ```javascript
-var throttledRunner = concurrency(function(a, callback) {
+var throttledRunner = next.concurrency(function(a, callback) {
   console.log('start:' + a);
   setTimeout(function() {
     console.log('end:' + a);
