@@ -3,6 +3,20 @@
 next 是一个为callback风格的异步编程提供支持的工具库。
 next和[Async.js](https://github.com/caolan/async)的不同之处在于：next是生成函数，async是调用函数
 
+## 优势
+### 复用性
+针对函数而不是针对过程，可以对函数进行组合和连接。采用node风格的callback机制，直接可以复用系统函数。
+
+### 扁平化callback层次
+使用next.pipe(fn1, fn2, fnN)连接函数，扁平化callback层次。
+
+### 统一的异常处理
+在pipe、each、collect等方法中进行组合的函数，一旦发生异常，则会统一跳到运行时传入callback进行处理，不用重复判断每级的error。
+
+## 一些代码片段
+### [compress](https://github.com/youngjay/next/blob/master/examples/compress/compress.js)
+从页面上读取script标签src -> 获取js文件内容 -> 调用uglify-js压缩 -> 写文件
+
 ## api
 
 ### pipe([fn1], [fn2], [fnN])
