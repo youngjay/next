@@ -25,7 +25,13 @@ next和[Async.js](https://github.com/caolan/async)的不同之处在于：async�
 
 
 
-## API
+## 使用
+
+```javascript
+var next = require('next'); // 如果放在node_modules目录下
+// or
+var next = require('./path/to/next'); // 如果放在相对目录下
+```
 
 ### pipe([fn1], [fn2], [fnN])
 生成一个函数，先调用callback1，完成之后以callback1的返回值调用callback2，以此类推。
