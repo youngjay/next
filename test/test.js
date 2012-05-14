@@ -1,14 +1,14 @@
 define(function(require) {
 
-var util = require('../index.js');
+var next = require('../index.js');
 
-var collect = util.collect;
-var pipe = util.pipe;
-var each = util.each;
-var concurrency = util.concurrency;
-var memoize = util.memoize;
-var rescue = util.rescue;
-// var task = util.task;
+var collect = next.collect;
+var pipe = next.pipe;
+var each = next.each;
+var concurrency = next.concurrency;
+var memoize = next.memoize;
+var rescue = next.rescue;
+// var task = next.task;
 
 
 // test tool
@@ -19,6 +19,13 @@ var add = function(a, callback) {
 var mul = function(a, callback) {
   callback(null, a * 2);
 };
+
+next.each(
+  function(num, callback) { callback(null, num + 1) }
+)([1,2,3], function() {
+  console.log(arguments);
+});
+
 
 // pipe(fns...)
 // pipe()(arg1, argN, callback) = invoke callback self with arguemnts
