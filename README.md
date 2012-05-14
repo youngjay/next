@@ -46,7 +46,7 @@ var collectAction = next.collect(
 collectAction(1, function() {
   console.log(arguments);
 });
-// result: [null, [2,3]]
+// result: [null, 2,3]
 
 ```
 
