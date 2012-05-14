@@ -22,7 +22,7 @@ add2(1, function() {
 ```
 
 ### each(fn)
-调用fn到每一个入参，收集结果
+针对数组，遍历每一个元素，调用fn。收集完结果之后返回。
 ```javascript
 var addEach = next.each(
   function(num, callback) { callback(null, num + 1) }
@@ -36,7 +36,7 @@ addEach([1,2,3], function() {
 ```
 
 ### concurrency(fn, limit, [onDrain])
-生成一个函数，使得同时运行的fn不超过limit个。当所有的fn运行完毕时触发onDrain
+生成一个函数，使得同时运行的fn不超过limit个，超过的调用将被缓存，当有fn执行完毕之后再执行。当所有的fn调用完毕时触发onDrain
 ```javascript
 var throttledRunner = concurrency(function(a, callback) {
   console.log('start:' + a);
