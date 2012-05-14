@@ -114,7 +114,7 @@ rescuer == (err, callback) ->
 生成一个函数，当发生异常时，由rescuer捕获，而不是跳转到运行时的callback。
 rescuer接受error和callback作为参数，可以选择返回到正常的分支，或者继续抛出异常。
 ```javascript
-rescue(function(a, callback) {
+next.rescue(function(a, callback) {
   console.log('raise exception:' + a);
   callback(a);
 }, function(err, callback) {
