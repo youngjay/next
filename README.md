@@ -34,8 +34,8 @@ var next = require('./path/to/next'); // 如果放在相对目录下
 ```
 
 ### pipe([fn1], [fn2], [fnN])
-生成一个函数，先调用callback1，完成之后以callback1的返回值调用callback2，以此类推。
-在调用的时候如果有异常，直接跳到调用的callback
+生成一个函数，先调用fn1，完成之后以fn1的返回值调用fn2，以此类推。
+在调用的时候如果有异常，直接跳到运行时传入的callback
 
 ```javascript
 var add2 = next.pipe(
@@ -51,7 +51,7 @@ add2(1, function() {
 ```
 
 ### each(fn)
-针对数组，遍历每一个元素，调用fn。收集完结果之后返回。
+生成一个函数，遍历入参每一个元素，调用fn。收集完结果之后按照传入顺序返回。
 ```javascript
 var addEach = next.each(
   function(num, callback) { callback(null, num + 1) }
