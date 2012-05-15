@@ -1,2 +1,2 @@
-node compress.js js.html
+node compress.js code.html
 pause

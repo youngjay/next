@@ -1,6 +1,6 @@
 define(function(require) {
 
-var next = require('../index.js');
+var next = require('../lib/next.js');
 
 var collect = next.collect;
 var pipe = next.pipe;
@@ -9,6 +9,17 @@ var concurrency = next.concurrency;
 var memoize = next.memoize;
 var rescue = next.rescue;
 var echo = next.echo;
+
+
+var add2 = next.pipe(
+  function(num, callback) { callback(null, num + 1, num + 2) },
+  function(num1, num2, callback) { callback(null, num1 + 3, num2 + 3) }
+);
+
+add2(1, function() {
+  console.log(arguments);
+});
+
 
 // test tool
 var add = function(a, callback) {
