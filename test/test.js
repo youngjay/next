@@ -1,7 +1,6 @@
 define(function(require) {
 
 var next = require('../lib/next.js');
-
 var collect = next.collect;
 var pipe = next.pipe;
 var each = next.each;
