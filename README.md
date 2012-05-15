@@ -84,14 +84,14 @@ next.echo([1,2,3], function() {
 ```javascript
 var collectAction = next.collect(
   next.echo,
-  function(num, callback) { callback(null, num + 1) },
-  function(num, callback) { callback(null, num + 2) }
+  function(num1, num2, callback) { callback(null, num1 + 1, num2 + 1) },
+  function(num1, num2, callback) { callback(null, num1 + 2, num2 + 2) }
 );
 
-collectAction(1, function() {
+collectAction(1, 1, function() {
   console.log(arguments);
 });
-// result: [null, [1,2,3]]
+// result: [null, 1, 1, 2, 3, 3]
 
 ```
 
