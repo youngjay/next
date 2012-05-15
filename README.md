@@ -6,13 +6,13 @@ next和[Async.js](https://github.com/caolan/async)的不同之处在于：async�
 
 
 ## 优势
-### 复用性
+* 函数复用--
 针对函数而不是针对过程，可以对函数进行组合和连接。采用node风格的callback机制，直接可以复用系统函数。
 
-### 扁平化callback层次
+* 扁平化callback层次--
 使用next.pipe(fn1, fn2, fnN)连接函数，扁平化callback层次。
 
-### 统一的异常处理
+* 统一的异常处理--
 在pipe、each、collect等方法中进行组合的函数，一旦发生异常，则会统一跳到运行时传入callback进行处理，不用重复判断每级的error。
 
 
