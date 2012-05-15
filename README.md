@@ -15,23 +15,7 @@ next和[Async.js](https://github.com/caolan/async)的不同之处在于：async�
 * 统一的异常处理--
 在pipe、each、collect等方法中进行组合的函数，一旦发生异常，则会统一跳到运行时传入callback进行处理，不用重复判断每级的error。
 
-
-
-
-## 一些功能示例
-### [compress](https://github.com/youngjay/next/blob/master/examples/compress/compress.js)
-从页面上读取script标签src -> 获取js文件内容 -> 调用uglify-js压缩 -> 写文件
-
-
-
-
-## 使用
-
-```javascript
-var next = require('next'); // 如果放在node_modules目录下
-// or
-var next = require('./path/to/next'); // 如果放在相对目录下
-```
+## API
 
 ### pipe([fn1], [fn2], [fnN])
 生成一个函数，先调用fn1，完成之后以fn1的返回值调用fn2，以此类推。
@@ -147,4 +131,8 @@ collectAction(1, 1, function() {
 
 ```
 
+
+## 一些功能示例
+### [compress](https://github.com/youngjay/next/blob/master/examples/compress/compress.js)
+从页面上读取script标签src -> 获取js文件内容 -> 调用uglify-js压缩 -> 写文件
 
