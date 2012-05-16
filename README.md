@@ -13,7 +13,7 @@ next和[Async.js](https://github.com/caolan/async)的不同之处在于：async�
 使用next.pipe(fn1, fn2, fnN)连接函数，扁平化callback层次。
 
 * 统一的异常处理--
-在pipe、each、collect等方法中进行组合的函数，一旦发生异常，则会统一跳到运行时传入callback进行处理，不用重复判断每级的error。
+在pipe、map、parallel等方法中进行组合的函数，一旦发生异常，则会统一跳到运行时传入callback进行处理，不用重复判断每级的error。
 
 ## API
 
@@ -34,10 +34,10 @@ add2(1, function() {
 // result: [null, 5, 6]
 ```
 
-### each(fn)
+### map(fn)
 生成一个函数，遍历入参每一个元素，调用fn。收集完结果之后按照传入顺序返回。
 ```javascript
-var addEach = next.each(
+var addEach = next.map(
   function(num, callback) { callback(null, num + 1) }
 );
 
@@ -48,15 +48,15 @@ addEach([1,2,3], function() {
 
 ```
 
-### collect(fn1, [fn2], [fnN])
+### parallel(fn1, [fn2], [fnN])
 生成一个函数，以当前参数调用每个fn，收集结果之后返回
 ```javascript
-var collectAction = next.collect(
+var parallelAction = next.parallel(
   function(num, callback) { callback(null, num + 1) },
   function(num, callback) { callback(null, num + 2) }
 );
 
-collectAction(1, function() {
+parallelAction(1, function() {
   console.log(arguments);
 });
 // result: [null, 2,3]
@@ -115,16 +115,16 @@ next.echo([1,2,3], function() {
 
 ```
 
-在collect的时候，使用echo可以返回原参数
+在parallel的时候，使用echo可以返回原参数
 
 ```javascript
-var collectAction = next.collect(
+var parallelAction = next.parallel(
   next.echo,
   function(num1, num2, callback) { callback(null, num1 + 1, num2 + 1) },
   function(num1, num2, callback) { callback(null, num1 + 2, num2 + 2) }
 );
 
-collectAction(1, 1, function() {
+parallelAction(1, 1, function() {
   console.log(arguments);
 });
 // result: [null, 1, 1, 2, 3, 3]
