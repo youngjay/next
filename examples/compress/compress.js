@@ -34,7 +34,7 @@ var run = next.pipe(
     }
   },
 
-  next.collect(next.echo, 'utf-8'),
+  next.parallel(next.echo, 'utf-8'),
 
   fs.readFile,
 
@@ -53,7 +53,7 @@ var run = next.pipe(
     callback(null, srcs);
   },
 
-  next.each(function(src, callback) {
+  next.map(function(src, callback) {
     var srcFileName = path.resolve(filePath, src);
     console.log('read file from: ' + srcFileName);
     fs.readFile(srcFileName, 'utf-8', callback);

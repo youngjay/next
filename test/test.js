@@ -1,9 +1,9 @@
 define(function(require) {
 
 var next = require('../lib/next.js');
-var collect = next.collect;
+var parallel = next.parallel;
 var pipe = next.pipe;
-var each = next.each;
+var map = next.map;
 var concurrency = next.concurrency;
 var memoize = next.memoize;
 var rescue = next.rescue;
@@ -33,9 +33,9 @@ var mul = function(a, callback) {
 // pipe()(arg1, argN, callback) = invoke callback self with arguemnts
 pipe(
   function(callback) {
-    console.log('test collect');
+    console.log('test parallel');
 
-    collect(echo, add, mul)(10, function() {
+    parallel(echo, add, mul)(10, function() {
       console.log(arguments)
     })
 
@@ -43,9 +43,9 @@ pipe(
   },
 
   function(callback) {
-    console.log('test each');
+    console.log('test map');
 
-    each(add)([3, 4], function() {
+    map(next.echo)([3, 4], 1, 2, function() {
       console.log(arguments)
     });
 
