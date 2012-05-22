@@ -1,3 +1,9 @@
 {
-    "main"    : "./index.js"
+    "name": "next",
+    "description": "a tiny library for callback style async programing",
+    "version": "1.0",
+    "homepage": "http://youngjay.github.com/next",
+    "author": "Yang Jie <hiyoungjay@gmail.com>",
+    "keywords": ["async", "callback"],
+    "main": "./index.js"
 }
