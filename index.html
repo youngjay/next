@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Next : 为callback风格的异步编程提供支持的工具库" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Next</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/youngjay/next">View on GitHub</a>
+
+          <h1 id="project_title">Next</h1>
+          <h2 id="project_tagline">为callback风格的异步编程提供支持的工具库</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/youngjay/next/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/youngjay/next/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>next</h1>
+
+<p>next 是一个为callback风格的异步编程提供支持的工具库。
+next和<a href="https://github.com/caolan/async">Async.js</a>的不同之处在于：async是调用函数, next是生成函数</p>
+
+<h2>优势</h2>
+
+<ul>
+<li><p>函数复用--
+针对函数而不是针对过程，可以对函数进行组合和连接。采用node风格的callback机制，直接可以复用系统函数。</p></li>
+<li><p>扁平化callback层次--
+使用next.pipe(fn1, fn2, fnN)连接函数，扁平化callback层次。</p></li>
+<li><p>统一的异常处理--
+在pipe、map、parallel等方法中进行组合的函数，一旦发生异常，则会统一跳到运行时传入callback进行处理，不用重复判断每级的error。</p></li>
+</ul><h2>API</h2>
+
+<h3>pipe([fn1], [fn2], [fnN])</h3>
+
+<p>生成一个函数，先调用fn1，完成之后以fn1的返回值调用fn2，以此类推。
+在调用的时候如果有异常，直接跳到运行时传入的callback</p>
+
+<div class="highlight">
+<pre><span class="kd">var</span> <span class="nx">add2</span> <span class="o">=</span> <span class="nx">next</span><span class="p">.</span><span class="nx">pipe</span><span class="p">(</span>
+  <span class="kd">function</span><span class="p">(</span><span class="nx">num</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span> <span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">num</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="p">},</span>
+  <span class="kd">function</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span> <span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">num1</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">num2</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span> <span class="p">}</span>
+<span class="p">);</span>
+
+<span class="nx">add2</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// result: [null, 5, 6]</span>
+</pre>
+</div>
+
+
+<h3>map(fn)</h3>
+
+<p>生成一个函数，遍历入参每一个元素，调用fn。收集完结果之后按照传入顺序返回。</p>
+
+<div class="highlight">
+<pre><span class="kd">var</span> <span class="nx">addEach</span> <span class="o">=</span> <span class="nx">next</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span>
+  <span class="kd">function</span><span class="p">(</span><span class="nx">num</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span> <span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">}</span>
+<span class="p">);</span>
+
+<span class="nx">addEach</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="c1">// result: [null, [2,3,4]]</span>
+
+</pre>
+</div>
+
+
+<h3>parallel(fn1, [fn2], [fnN])</h3>
+
+<p>生成一个函数，以当前参数调用每个fn，收集结果之后返回</p>
+
+<div class="highlight">
+<pre><span class="kd">var</span> <span class="nx">parallelAction</span> <span class="o">=</span> <span class="nx">next</span><span class="p">.</span><span class="nx">parallel</span><span class="p">(</span>
+  <span class="kd">function</span><span class="p">(</span><span class="nx">num</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span> <span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">num</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">},</span>
+  <span class="kd">function</span><span class="p">(</span><span class="nx">num</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span> <span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">num</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="p">}</span>
+<span class="p">);</span>
+
+<span class="nx">parallelAction</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="c1">// result: [null, 2,3]</span>
+
+</pre>
+</div>
+
+
+<h3>concurrency(fn, limit, [onDrain])</h3>
+
+<p>生成一个函数，使得同时运行的fn不超过limit个，超过的调用将被缓存，当有fn执行完毕之后再执行。当所有的fn调用完毕时触发onDrain</p>
+
+<div class="highlight">
+<pre><span class="kd">var</span> <span class="nx">throttledRunner</span> <span class="o">=</span> <span class="nx">next</span><span class="p">.</span><span class="nx">concurrency</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'start:'</span> <span class="o">+</span> <span class="nx">a</span><span class="p">);</span>
+  <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'end:'</span> <span class="o">+</span> <span class="nx">a</span><span class="p">);</span>
+    <span class="nx">callback</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+  <span class="p">},</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">3000</span><span class="p">);</span>
+<span class="p">},</span> <span class="mi">5</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'drain'</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">throttledRunner</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{});</span>
+<span class="p">}</span>
+
+</pre>
+</div>
+
+
+<h3>rescue(fn, rescuer)</h3>
+
+<p>rescuer == (err, callback) -&gt; 
+生成一个函数，当发生异常时，由rescuer捕获，而不是跳转到运行时的callback。
+rescuer接受error和callback作为参数，可以选择返回到正常的分支，或者继续抛出异常。</p>
+
+<div class="highlight">
+<pre><span class="nx">next</span><span class="p">.</span><span class="nx">rescue</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'raise exception:'</span> <span class="o">+</span> <span class="nx">a</span><span class="p">);</span>
+  <span class="nx">callback</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+<span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'rescue exception'</span><span class="p">);</span>
+  <span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">err</span> <span class="o">+</span> <span class="s1">' is rescued'</span><span class="p">)</span>
+<span class="p">})(</span><span class="s1">'error'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arguments</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="c1">// result:</span>
+<span class="c1">//rescue</span>
+<span class="c1">//raise exception:error</span>
+<span class="c1">//rescue exception</span>
+
+</pre>
+</div>
+
+
+<h3>echo()</h3>
+
+<p>辅助函数，直接返回参数</p>
+
+<div class="highlight">
+<pre><span class="nx">next</span><span class="p">.</span><span class="nx">echo</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="c1">// result: [null, [1,2,3]]</span>
+
+</pre>
+</div>
+
+
+<p>在parallel的时候，使用echo可以返回原参数</p>
+
+<div class="highlight">
+<pre><span class="kd">var</span> <span class="nx">parallelAction</span> <span class="o">=</span> <span class="nx">next</span><span class="p">.</span><span class="nx">parallel</span><span class="p">(</span>
+  <span class="nx">next</span><span class="p">.</span><span class="nx">echo</span><span class="p">,</span>
+  <span class="kd">function</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span> <span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">num1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">num2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">},</span>
+  <span class="kd">function</span><span class="p">(</span><span class="nx">num1</span><span class="p">,</span> <span class="nx">num2</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span> <span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">num1</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">num2</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="p">}</span>
+<span class="p">);</span>
+
+<span class="nx">parallelAction</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">arguments</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="c1">// result: [null, 1, 1, 2, 3, 3]</span>
+
+</pre>
+</div>
+
+
+<h2>一些功能示例</h2>
+
+<h3><a href="https://github.com/youngjay/next/blob/master/examples/compress/compress.js">compress</a></h3>
+
+<p>从页面上读取script标签src -&gt; 获取js文件内容 -&gt; 调用uglify-js压缩 -&gt; 写文件</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Next maintained by <a href="https://github.com/youngjay">youngjay</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
