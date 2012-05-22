@@ -6,7 +6,7 @@ var pipe = next.pipe;
 var map = next.map;
 var concurrency = next.concurrency;
 var memoize = next.memoize;
-var rescue = next.rescue;
+var attempt = next.attempt;
 var echo = next.echo;
 
 
@@ -35,7 +35,7 @@ pipe(
   function(callback) {
     console.log('test parallel');
 
-    parallel(echo, add, mul)(10, function() {
+    parallel(next.pipe(), add, mul)(10, function() {
       console.log(arguments)
     })
 
@@ -45,7 +45,7 @@ pipe(
   function(callback) {
     console.log('test map');
 
-    map(next.echo)([3, 4], 1, 2, function() {
+    map(next.pipe())([3, 4], 1, 2, function() {
       console.log(arguments)
     });
 
@@ -54,19 +54,23 @@ pipe(
   },
 
   function(callback) {
-    console.log('test rescue');
+    console.log('test attempt');
 
-    rescue(function(a, callback) {
-      console.log('raise exception:' + a);
-      callback(a);
-    }, function(err, callback) {
-      console.log('rescue exception');
-      callback(null, err + ' is rescued')
-    })('error', function() {
+    attempt(
+      function(a, callback) {
+        callback(a);
+      }, 
+      function(a, callback) {
+        callback('rescue1:' + a)
+      }, 
+      function(a, callback) {
+        callback(null, 'rescue2:' + a)
+      }
+    )('error', function() {
       console.log(arguments)
     })
 
-    callback()
+    // callback()
   },
 
 
