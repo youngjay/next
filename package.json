@@ -1,7 +1,7 @@
 {
     "name": "next.js",
     "description": "a tiny library for callback style async programing",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "homepage": "http://youngjay.github.com/next",
     "author": "Yang Jie <hiyoungjay@gmail.com>",
     "keywords": ["async", "callback"],
