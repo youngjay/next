@@ -34,9 +34,9 @@ var run = next.pipe(
     }
   },
 
-  next.parallel(next.echo, 'utf-8'),
-
-  fs.readFile,
+  function(fileName, callback) {
+    fs.readFile(fileName, 'utf-8', callback);
+  },
 
   function(content, callback) {
     var srcs = [];
