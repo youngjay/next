@@ -82,55 +82,25 @@ for (var i = 0; i < 1000; i++) {
 
 ```
 
-### rescue(fn, rescuer)
-rescuer == (err, callback) -> 
-生成一个函数，当发生异常时，由rescuer捕获，而不是跳转到运行时的callback。
-rescuer接受error和callback作为参数，可以选择返回到正常的分支，或者继续抛出异常。
-```javascript
-next.rescue(function(a, callback) {
-  console.log('raise exception:' + a);
-  callback(a);
-}, function(err, callback) {
-  console.log('rescue exception');
-  callback(null, err + ' is rescued')
-})('error', function() {
+### attempt([fn1], [fn2], [fnN])
+顺序尝试fn1到fnN，直到当有一个成功，返回值
+next.attempt(
+  function(a, callback) {
+    callback(1);
+  }, 
+  function(a, callback) {
+    callback(null, 2)
+  }, 
+  function(a, callback) {
+    callback(3)
+  }
+)('error', function() {
   console.log(arguments)
 })
 
-// result:
-//rescue
-//raise exception:error
-//rescue exception
+//result: [null, 2] 
 
 ```
-
-
-### echo()
-辅助函数，直接返回参数
-```javascript
-next.echo([1,2,3], function() {
-  console.log(arguments);
-});
-// result: [null, [1,2,3]]
-
-```
-
-在parallel的时候，使用echo可以返回原参数
-
-```javascript
-var parallelAction = next.parallel(
-  next.echo,
-  function(num1, num2, callback) { callback(null, num1 + 1, num2 + 1) },
-  function(num1, num2, callback) { callback(null, num1 + 2, num2 + 2) }
-);
-
-parallelAction(1, 1, function() {
-  console.log(arguments);
-});
-// result: [null, 1, 1, 2, 3, 3]
-
-```
-
 
 ## 一些功能示例
 ### [compress](https://github.com/youngjay/next/blob/master/examples/compress/compress.js)

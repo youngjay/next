@@ -58,19 +58,19 @@ pipe(
 
     attempt(
       function(a, callback) {
-        callback(a);
+        callback(1);
       }, 
       function(a, callback) {
-        callback('rescue1:' + a)
+        callback(null, 2)
       }, 
       function(a, callback) {
-        callback(null, 'rescue2:' + a)
+        callback(3)
       }
     )('error', function() {
       console.log(arguments)
     })
 
-    // callback()
+    callback()
   },
 
 
