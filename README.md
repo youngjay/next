@@ -83,7 +83,9 @@ for (var i = 0; i < 1000; i++) {
 ```
 
 ### attempt([fn1], [fn2], [fnN])
+
 顺序尝试fn1到fnN，直到当有一个成功，返回值
+```javascript
 next.attempt(
   function(a, callback) {
     callback(1);
