@@ -3,6 +3,7 @@ define(function(require) {
 var next = require('../lib/next.js');
 var parallel = next.parallel;
 var pipe = next.pipe;
+var series = next.series;
 var map = next.map;
 var concurrency = next.concurrency;
 var memoize = next.memoize;
@@ -31,7 +32,7 @@ var mul = function(a, callback) {
 
 // pipe(fns...)
 // pipe()(arg1, argN, callback) = invoke callback self with arguemnts
-pipe(
+series(
   function(callback) {
     console.log('test parallel');
 
